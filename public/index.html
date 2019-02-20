@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Learn GraphQL Page</title>
+    <style type="text/css">
+    #btn {
+        width: 100px;
+        height: 41px;
+        background: #2196F3;
+        border-radius: 23px;
+        color: #fff;
+        text-align: center;
+        line-height: 41px;
+        cursor: pointer;
+        box-shadow: 4px 3px 19px rgba(0, 0, 0, 0.5);
+    }
+    </style>
+</head>
+
+<body>
+    <div id="btn">GET DATA</div>
+</body>
+<script type="text/javascript">
+let btn = document.getElementById('btn');
+btn.onclick = function() {
+    const userId = 10001;
+    const query = `query AllUser($id:Int!) {
+  	userInfo(id: $id) {
+  		name
+  		age
+  		gender
+  	}
+  }`;
+    fetch('/graphql', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                query,
+                variables: { id: userId }
+            })
+        }).then(res => res.json())
+        .then(resData => {
+            console.log(resData.data);
+        })
+
+}
+</script>
+
+</html>
